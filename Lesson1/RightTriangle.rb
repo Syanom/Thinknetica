@@ -1,9 +1,9 @@
 puts "Enter first side of triangle, please"
-a = gets.chomp.to_i
+a = gets.chomp.to_f
 puts "Enter second side of triangle, please"
-b = gets.chomp.to_i
+b = gets.chomp.to_f
 puts "Enter third side of triangle, please"
-c = gets.chomp.to_i
+c = gets.chomp.to_f
 
 # Make c the biggest side, like in trigonometry
 if a > b && a > c
