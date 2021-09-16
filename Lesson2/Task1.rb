@@ -1,4 +1,4 @@
-mounthes = {
+monthes = {
 	"January" => 31,
 	"February" => 28,
 	"March" => 31,
@@ -13,4 +13,4 @@ mounthes = {
 	"December" => 31
 }
 
-mounthes.each { |mounth, days| puts mounth if days == 30 }
+monthes.each { |month, days| puts month if days == 30 }
