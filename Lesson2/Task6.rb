@@ -13,7 +13,7 @@ end
 
 final_sum = 0
 cart.each do |product, info|
-	# Ну не нашел я, как обратиться к нулевому и единственному ключу хэша, сделал как сумел :(
+	# Ну не нашел я, как обратиться к нулевому и единственному ключу и значению хэша, сделал как сумел :(
 	info.each do |price, quantity|
       sum = price * quantity
 	  final_sum += sum 
