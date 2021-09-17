@@ -7,21 +7,21 @@ c = gets.chomp.to_f
 
 # Make c the biggest side, like in trigonometry
 if a > b && a > c
-	tmp = a 
-	a = c
-	c = tmp
+  tmp = a
+  a = c
+  c = tmp
 elsif b > a && b > c
-	tmp = b
-	b = c
-	c = tmp
+  tmp = b
+  b = c
+  c = tmp
 end
 
 if a == b && a == c
-	puts "Triangle is equilateral"
-elsif a == b 
-	puts "Triangle is isosceles"
+  puts "Triangle is equilateral"
+elsif a == b
+  puts "Triangle is isosceles"
 elsif c ** 2 == a ** 2 + b ** 2
-	puts "Triangle is right-angled"
+  puts "Triangle is right-angled"
 else
-	puts "Triangle is not right-angled"
+  puts "Triangle is not right-angled"
 end
