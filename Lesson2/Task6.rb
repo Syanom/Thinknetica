@@ -8,17 +8,14 @@ while true
   price = gets.chomp.to_f
   puts "Quantity?"
   quantity = gets.chomp.to_f
-  cart[product] = { price => quantity }
+  cart[product] = { price: price, quantity: quantity }
 end
 
 final_sum = 0
 cart.each do |product, info|
-  # Ну не нашел я, как обратиться к нулевому и единственному ключу и значению хэша, сделал как сумел :(
-  info.each do |price, quantity|
-     sum = price * quantity
-     final_sum += sum 
-     puts "Product: #{product}, price: #{price}, quantity: #{quantity}, cost of position: #{sum}"
-  end  
+  sum = info[:price] * info[:quantity]
+  final_sum += sum 
+  puts "Product: #{product}, price: #{info[:price]}, quantity: #{info[:quantity]}, cost of position: #{sum}"
 end
 
 puts "Cost of whole cart: #{final_sum}"
