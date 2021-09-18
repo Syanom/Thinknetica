@@ -39,7 +39,7 @@ class Route
   end
 
   def remove_station(stop_to_delete)
-    @stops.delete(stop_to_delete)
+    stop_to_delete != @stops[0] && stop_to_delete != @stops[-1] ? @stops.delete(stop_to_delete) : "You can't delete departure or arrival points!"
   end
 
   def print_stations
@@ -69,7 +69,7 @@ class Train
   end
 
   def remove_wagon
-    @speed == 0 ? @number_of_wagons -= 1 : "First stop the train!"
+    @speed == 0 && number_of_wagons != 0 ? @number_of_wagons -= 1 : "First stop the train / Make sure that train has at least one wagon"
   end
 
   def move_forward
