@@ -14,7 +14,11 @@ class Train
   end
 
   def add_wagon(wagon)
-    @speed == 0 ? @wagons << wagon : "First stop the train!"
+    if @speed == 0
+      wagon.type == @type ? @wagons << wagon : "Wrong wagon type"
+    else
+      "First stop the train!"
+    end
   end
 
   def remove_wagon(wagon)
@@ -27,7 +31,7 @@ class Train
       @current_position += 1
       @route[@current_position].train_arrive(self)
     else
-      "The train is at the last stop on the route, no way forward!"
+      "The train is at the last station on the route, no way forward!"
     end
   end
 
@@ -43,7 +47,7 @@ class Train
 
   def take_route(route)
     @route = route
-    if @route[0].list_of_trains.include?(self)
+    if @route[0].trains.include?(self)
       @current_position = 0
       move_forward
     else
