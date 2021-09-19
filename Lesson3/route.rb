@@ -8,8 +8,7 @@ class Route
   end
 
   def initialize(departure, arrival)
-    @stops = []
-    @stops << departure << arrival
+    @stops = [departure, arrival]
   end
 
   def add_station(stop)
