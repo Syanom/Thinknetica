@@ -1,26 +1,26 @@
 class Route
   def [](index)
-    @stops[index]
+    @stations[index]
   end
 
   def length
-    @stops.length
+    @stations.length
   end
 
   def initialize(departure, arrival)
-    @stops = [departure, arrival]
+    @stations = [departure, arrival]
   end
 
-  def add_station(stop)
-    @stops.insert(-2, stop)
+  def add_station(station)
+    @stations.insert(-2, station)
   end
 
-  def remove_station(stop_to_delete)
-    stop_to_delete != @stops[0] && stop_to_delete != @stops[-1] ? @stops.delete(stop_to_delete) : "You can't delete departure or arrival points!"
+  def remove_station(station)
+    station != @stations[0] && station != @stations[-1] ? @stations.delete(station) : "You can't delete departure or arrival points!"
   end
 
   def print_stations
-    @stops.each { |stop| print "#{stop.name} " }
+    @stations.each { |station| print "#{station.name} " }
     puts ""
   end
 end
