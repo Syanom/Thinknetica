@@ -1,53 +1,3 @@
-class Station
-  attr_reader :list_of_trains
-  attr_reader :name
-
-  def initialize(name)
-    @name = name
-    @list_of_trains = []
-  end
-
-  def train_arrive(train)
-    @list_of_trains << train
-  end
-
-  def list_of_type_trains(type)
-    @list_of_trains.select { |train| train.type == type }
-  end
-
-  def train_departure(train_to_delete)
-    @list_of_trains.delete(train_to_delete)
-  end
-end
-
-class Route
-  def [](index)
-    @stops[index]
-  end
-
-  def length
-    @stops.length
-  end
-
-  def initialize(departure, arrival)
-    @stops = []
-    @stops << departure << arrival
-  end
-
-  def add_station(stop)
-    @stops.insert(-2, stop)
-  end
-
-  def remove_station(stop_to_delete)
-    stop_to_delete != @stops[0] && stop_to_delete != @stops[-1] ? @stops.delete(stop_to_delete) : "You can't delete departure or arrival points!"
-  end
-
-  def print_stations
-    @stops.each { |stop| print "#{stop.name} " }
-    puts ""
-  end
-end
-
 class Train
   attr_accessor :speed
   attr_reader :number_of_wagons
@@ -107,10 +57,10 @@ class Train
   end
 
   def next_station
-    @route[@current_position + 1]
+    @current_position != @route.length - 1 ? @route[@current_position + 1] : "Train is at last point of the route"
   end
 
   def previous_station
-    @route[@current_position - 1]
+    @current_position != 0 ? @route[@current_position - 1] : "Train is at first station in the route"
   end
 end
