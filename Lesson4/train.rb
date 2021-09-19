@@ -27,9 +27,9 @@ class Train
 
   def move_forward
     unless @current_position == @route.length - 1
-      @route[@current_position].train_departure(self)
       @current_position += 1
-      @route[@current_position].train_arrive(self)
+      previous_station.train_departure(self)
+      current_station.train_arrive(self)
     else
       "The train is at the last station on the route, no way forward!"
     end
@@ -37,9 +37,9 @@ class Train
 
   def move_backward
     unless @current_position == 0
-      @route[@current_position].train_departure(self)
       @current_position -= 1
-      @route[@current_position].train_arrive(self)
+      next_station.train_departure(self)
+      current_station.train_arrive(self)
     else
       "The train is at the starting point of the route, no way backward!"
     end
