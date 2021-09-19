@@ -4,18 +4,18 @@ class Station
 
   def initialize(name)
     @name = name
-    @list_of_trains = []
+    @trains = []
   end
 
   def train_arrive(train)
-    @list_of_trains << train
+    @trains << train
   end
 
   def list_of_type_trains(type)
-    @list_of_trains.select { |train| train.type == type }
+    @trains.select { |train| train.type == type }
   end
 
-  def train_departure(train_to_delete)
-    @list_of_trains.delete(train_to_delete)
+  def train_departure(train)
+    @trains.delete(train)
   end
 end
