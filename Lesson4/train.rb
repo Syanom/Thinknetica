@@ -3,10 +3,10 @@ class Train
   attr_reader :number_of_wagons
   attr_reader :type
 
-  def initialize(number, type, number_of_wagons)
+  def initialize(number, type)
     @number = number
     @type = type
-    @number_of_wagons = number_of_wagons
+    @wagons = []
     @speed = 0
   end
 
@@ -14,12 +14,12 @@ class Train
     @speed = 0
   end
 
-  def add_wagon
-    @speed == 0 ? @number_of_wagons += 1 : "First stop the train!"
+  def add_wagon(wagon)
+    @speed == 0 ? @wagons << wagon : "First stop the train!"
   end
 
-  def remove_wagon
-    @speed == 0 && number_of_wagons != 0 ? @number_of_wagons -= 1 : "First stop the train / Make sure that train has at least one wagon"
+  def remove_wagon(wagon)
+    @speed == 0 ? @wagons.delete(wagon) : "First stop the train!"
   end
 
   def move_forward
