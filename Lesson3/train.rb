@@ -44,7 +44,7 @@ class Train
 
   def take_route(route)
     @route = route
-    if @route[0].list_of_trains.include?(self)
+    if @route[0].trains.include?(self)
       @current_position = 0
       move_forward
     else
