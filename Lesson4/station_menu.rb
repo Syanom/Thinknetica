@@ -11,15 +11,9 @@ class StationMenu < ObjectMenu
     super
   end
 
-  def get_station(stations)
-    print "Enter station name: "
-    name = gets.chomp.to_sym
-    unless stations.any? { |station| station.name == name }
-      print "No such station found. Want to create new? y/n: "
-      command = gets.chomp.to_sym
-      command == :y ? stations << Station.new(name) : stations
-    end
-    stations.find { |station| station.name == name }
+  def get_object(stations)
+    stations << Station.new(@current_object) if super(stations) == :y
+    stations.find { |station| station.name == @current_object }
   end
 
   def get_command
@@ -32,9 +26,5 @@ class StationMenu < ObjectMenu
     else
       @command = :wrong
     end
-  end
-
-  def test
-    puts "Calling subclass method works!"
   end
 end

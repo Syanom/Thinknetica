@@ -1,8 +1,9 @@
-require_relative 'menu.rb'
+require_relative 'object_menu.rb'
+require_relative 'train.rb'
 
-class TrainMenu < Menu
+class TrainMenu < ObjectMenu
   def initialize
-    @object = "Train"
+    @object = "train"
     @content = [
       "Type a to add wagon",
       "Type r to remove wagon",
@@ -14,9 +15,13 @@ class TrainMenu < Menu
     super
   end
 
-  def get_train(trains)
-    print "Enter train name: "
-    name = gets.chomp.to_sym
+  def get_object(trains)
+    if super(trains) == :y
+      print "Enter trains's type: "
+      type = gets.chomp.to_sym
+      trains << Train.new(@current_object, type)
+    end
+    trains.find { |train| train.number == @current_object }
   end
 
   def get_command

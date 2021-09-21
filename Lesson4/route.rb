@@ -1,4 +1,6 @@
 class Route
+  attr_reader :name
+
   def [](index)
     @stations[index]
   end
@@ -7,7 +9,8 @@ class Route
     @stations.length
   end
 
-  def initialize(departure, arrival)
+  def initialize(name, departure, arrival)
+    @name = name
     @stations = [departure, arrival]
   end
 
