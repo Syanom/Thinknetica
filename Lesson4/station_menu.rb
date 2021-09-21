@@ -13,7 +13,9 @@ class StationMenu < ObjectMenu
 
   def get_object(stations)
     stations << Station.new(@current_object) if super(stations) == :y
-    stations.find { |station| station.name == @current_object }
+    station = stations.find { |station| station.name == @current_object }
+    @current_object = nil
+    station
   end
 
   def get_command

@@ -27,7 +27,7 @@ loop do
     case station_menu.get_command
     when :trains
       unless station.trains.empty?
-        puts station.trains
+        station.trains.each { |train| puts "#{train.type.to_s.capitalize} train: #{train.number.to_s}" }
       else
         puts "There're no trains on this station"
       end

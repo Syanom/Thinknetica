@@ -1,5 +1,6 @@
 require_relative 'object_menu.rb'
-require_relative 'train.rb'
+require_relative 'passenger_train.rb'
+require_relative 'cargo_train.rb'
 
 class TrainMenu < ObjectMenu
   def initialize
@@ -19,9 +20,18 @@ class TrainMenu < ObjectMenu
     if super(trains) == :y
       print "Enter trains's type: "
       type = gets.chomp.to_sym
-      trains << Train.new(@current_object, type)
+      case type
+      when :passenger
+        trains << PassengerTrain.new(@current_object, type)
+      when :cargo
+        trains << CargoTrain.new(@current_object, type)
+      else
+        puts "We not support such type of trains yet."
+      end
     end
-    trains.find { |train| train.number == @current_object }
+    train = trains.find { |train| train.number == @current_object }
+    @current_object = nil
+    train
   end
 
   def get_command

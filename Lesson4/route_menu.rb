@@ -22,7 +22,9 @@ class RouteMenu < ObjectMenu
       return nil if departure == nil
       routes <<  Route.new(@current_object, departure, arrival)
     end
-    routes.find { |route| route.name == @current_object }
+    route = routes.find { |route| route.name == @current_object }
+    @current_object = nil
+    route
   end
 
   def get_command
