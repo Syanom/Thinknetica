@@ -22,11 +22,12 @@ class TrainMenu < ObjectMenu
       type = gets.chomp.to_sym
       case type
       when :passenger
-        trains << PassengerTrain.new(@current_object, type)
+        trains << PassengerTrain.new(@current_object)
       when :cargo
-        trains << CargoTrain.new(@current_object, type)
+        trains << CargoTrain.new(@current_object)
       else
-        puts "We not support such type of trains yet."
+        puts "We not support such type of trains yet. Enter to continue"
+        gets
       end
     end
     train = trains.find { |train| train.number == @current_object }

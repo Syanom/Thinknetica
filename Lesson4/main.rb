@@ -52,10 +52,42 @@ loop do
       train = train_menu.get_object(trains)
       next if train == nil
       train.take_route(route)
+    when :back
+      next
     end
 
   when :train
-    puts "Train menu under construction"
+    train = train_menu.get_object(trains)
+    next if train == nil
+    train_menu.draw
+    case train_menu.get_command
+    when :add_wagon
+      case train.type
+      when :passenger
+        train.add_wagon(PassengerWagon.new)
+      when :cargo
+        train.add_wagon(CargoWagon.new)
+      end
+      puts "Wagon added"
+    when :remove_wagon
+      case train.type
+      when :passenger
+        train.remove_wagon(PassengerWagon.new)
+      when :cargo
+        train.remove_wagon(CargoWagon.new)
+        puts "Wagon removed"
+      end
+    when :take_route
+      route = route_menu.get_object(routes, stations, station_menu)
+      next if route = nil
+      train.take_route(route)
+    when :forward
+      train.move_forward
+    when :backward
+      train.move_backward
+    when :back
+      next
+    end
 
   when :exit
     break

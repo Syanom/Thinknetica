@@ -7,7 +7,8 @@ class RouteMenu < ObjectMenu
     @content = [
       "Type a to add station to route",
       "Type r to remove station from route",
-      "Type app to appoint route to train"
+      "Type app to appoint route to train",
+      "Type b to return back to main menu"
     ]
     super
   end

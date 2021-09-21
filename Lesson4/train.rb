@@ -48,12 +48,8 @@ class Train
 
   def take_route(route)
     @route = route
-    if @route[0].trains.include?(self)
-      @current_position = 0
-      move_forward
-    else
-      "The train isn't on the starting point of the route!"
-    end
+    @current_position = 0
+    move_forward
   end
 
   def current_station
