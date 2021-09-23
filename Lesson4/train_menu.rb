@@ -17,39 +17,39 @@ class TrainMenu < ObjectMenu
   end
 
   def get_object(trains)
-    if super(trains) == :y
+    if super(trains) == "y"
       print "Enter trains's type: "
-      type = gets.chomp.to_sym
+      type = gets.chomp.to_s
       case type
-      when :passenger
+      when "passenger"
         trains << PassengerTrain.new(@current_object)
-      when :cargo
+      when "cargo"
         trains << CargoTrain.new(@current_object)
       else
         puts "We not support such type of trains yet. Enter to continue"
         gets
       end
     end
-    train = trains.find { |train| train.number == @current_object }
+    train = trains.find { |train| train.name == @current_object }
     @current_object = nil
     train
   end
 
   def get_command
-    command_shortcut = gets.chomp.to_sym
+    command_shortcut = gets.chomp.to_s
     case command_shortcut
-    when :a
-      command = :add_wagon
-    when :r
-      command = :remove_wagon
-    when :t
-      command = :take_route
-    when :fw
-      command = :forward
-    when :bw
-      command = :backward
-    when :b
-      command = :back
+    when "a"
+      command = "add_wagon"
+    when "r"
+      command = "remove_wagon"
+    when "t"
+      command = "take_route"
+    when "fw"
+      command = "forward"
+    when "bw"
+      command = "backward"
+    when "b"
+      command = "back"
     end
 
   end

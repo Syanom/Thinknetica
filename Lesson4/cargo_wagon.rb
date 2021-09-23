@@ -2,6 +2,6 @@ require_relative 'wagon.rb'
 
 class CargoWagon < Wagon
   def initialize
-    super(:cargo)
+    super("cargo")
   end
 end

@@ -16,12 +16,19 @@ class Route
 
   def add_station(station)
     @stations.insert(-2, station)
+    "Station #{station.name} added sucsessfully"
   end
 
   def remove_station(station)
-    station != @stations[0] && station != @stations[-1] ? @stations.delete(station) : "You can't delete departure or arrival points!"
+    if station != @stations[0] && station != @stations[-1]
+      @stations.delete(station)
+      "Station #{station.name} removed sucsessfully"
+    else
+      "You can't delete departure or arrival points!"
+    end
   end
 
+  # На данный момент эта функция нигде не используется, но убирать ее под протектед не имеет смысла
   def print_stations
     @stations.each { |station| print "#{station.name} " }
     puts ""

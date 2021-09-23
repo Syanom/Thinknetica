@@ -20,14 +20,22 @@ trains = []
 loop do
   main_menu.draw
   case main_menu.get_command
-  when :station
+  when "all_stations"
+    unless stations.empty?
+      puts "Stations list:"
+      stations.each { |station| puts "#{station.name}" }
+    else
+      puts "No stations created yet"
+    end
+
+  when "station"
     station = station_menu.get_object(stations)
     next if station == nil
     station_menu.draw
     case station_menu.get_command
-    when :trains
+    when "trains"
       unless station.trains.empty?
-        station.trains.each { |train| puts "#{train.type.to_s.capitalize} train: #{train.number.to_s}" }
+        station.trains.each { |train| puts "#{train.type.to_s.capitalize} train: #{train.name.to_s}" }
       else
         puts "There're no trains on this station"
       end
@@ -35,65 +43,52 @@ loop do
       next
     end
 
-  when :route
+  when "route"
     route = route_menu.get_object(routes, stations, station_menu)
     next if route == nil
     route_menu.draw
     case route_menu.get_command
-    when :add
+    when "add"
       station = station_menu.get_object(stations)
       next if station == nil
-      route.add_station(station)
-    when :remove
+      puts route.add_station(station)
+    when "remove"
       station = station_menu.get_object(stations)
       next if station == nil
-      route.remove_station(station)
-    when :appoint
-      train = train_menu.get_object(trains)
-      next if train == nil
-      train.take_route(route)
-    when :back
+      puts route.remove_station(station)
+    when "back"
       next
     end
 
-  when :train
+  when "train"
     train = train_menu.get_object(trains)
     next if train == nil
     train_menu.draw
     case train_menu.get_command
-    when :add_wagon
+    when "add_wagon"
       case train.type
-      when :passenger
-        train.add_wagon(PassengerWagon.new)
-      when :cargo
-        train.add_wagon(CargoWagon.new)
+      when "passenger"
+        puts train.add_wagon(PassengerWagon.new)
+      when "cargo"
+        puts train.add_wagon(CargoWagon.new)
       end
-      puts "Wagon added"
-    when :remove_wagon
-      case train.type
-      when :passenger
-        train.remove_wagon(PassengerWagon.new)
-      when :cargo
-        train.remove_wagon(CargoWagon.new)
-        puts "Wagon removed"
-      end
-    when :take_route
+    when "remove_wagon"
+      puts train.remove_wagon
+    when "take_route"
       route = route_menu.get_object(routes, stations, station_menu)
-      next if route = nil
-      train.take_route(route)
-    when :forward
-      train.move_forward
-    when :backward
-      train.move_backward
-    when :back
+      next if route == nil
+      puts train.take_route(route)
+    when "forward"
+      puts train.move_forward
+    when "backward"
+      puts train.move_backward
+    when "back"
       next
     end
 
-  when :exit
+  when "exit"
     break
   else
     puts "Wrong command"
   end
-  puts "Press enter to continue"
-  gets
 end

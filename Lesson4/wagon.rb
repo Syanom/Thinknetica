@@ -5,3 +5,4 @@ class Wagon
     @type = type
   end
 end
+

@@ -1,11 +1,4 @@
 class Menu
-  attr_reader :command
-  attr_reader :arguments
-  attr_reader :content
-  attr_reader :object
-
-  attr_reader :title
-
   def initialize
     @menu_width = 40
     @top_border = "╔══════════════════════════════════════╗"
@@ -15,7 +8,6 @@ class Menu
   end
 
   def draw
-    system "clear"
     puts @top_border
     puts @title.center(@menu_width, ' ')
     puts ""
@@ -25,4 +17,11 @@ class Menu
 
   def get_command
   end
+
+  protected
+  # Все это нужно для функции отрисовки меню. Другим частям программы этого знать не обязательно
+  attr_reader :command
+  attr_reader :object
+  attr_reader :title
+  attr_reader :content
 end

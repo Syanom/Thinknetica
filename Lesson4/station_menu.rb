@@ -12,21 +12,21 @@ class StationMenu < ObjectMenu
   end
 
   def get_object(stations)
-    stations << Station.new(@current_object) if super(stations) == :y
+    stations << Station.new(@current_object) if super(stations) == "y"
     station = stations.find { |station| station.name == @current_object }
     @current_object = nil
     station
   end
 
   def get_command
-    command_shortcut = gets.chomp.to_sym
+    command_shortcut = gets.chomp.to_s
     case command_shortcut
-    when :t
-      @command = :trains
-    when :b
-      @command = :back
+    when "t"
+      @command = "trains"
+    when "b"
+      @command = "back"
     else
-      @command = :wrong
+      @command = "wrong"
     end
   end
 end
