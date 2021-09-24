@@ -4,88 +4,85 @@ require_relative 'passenger_train.rb'
 require_relative 'cargo_train.rb'
 require_relative 'passenger_wagon.rb'
 require_relative 'cargo_wagon.rb'
-require_relative 'main_menu.rb'
-require_relative 'station_menu.rb'
-require_relative 'route_menu.rb'
-require_relative 'train_menu.rb'
+require_relative 'menu.rb'
 
-main_menu = MainMenu.new
-station_menu = StationMenu.new
-route_menu = RouteMenu.new
-train_menu = TrainMenu.new
+menu = Menu.new
 stations = []
 routes = []
 trains = []
 
 loop do
-  main_menu.draw
-  case main_menu.get_command
+  menu.draw
+  case menu.get_command
   when "all_stations"
-    unless stations.empty?
-      puts "Stations list:"
-      stations.each { |station| puts "#{station.name}" }
-    else
-      puts "No stations created yet"
-    end
-
-  when "station"
-    station = station_menu.get_object(stations)
+    stations.each { |station| puts station.name }
+  when "trains_on_station"
+    station = menu.find_object("station", stations)
     next if station == nil
-    station_menu.draw
-    case station_menu.get_command
-    when "trains"
-      unless station.trains.empty?
-        station.trains.each { |train| puts "#{train.type.to_s.capitalize} train: #{train.name.to_s}" }
-      else
-        puts "There're no trains on this station"
-      end
-    when :back
-      next
+    station.trains.each { |train| puts "#{train.type.capitalize} train #{train.name}" }
+  when "create_station"
+    print "Enter station's name: "
+    name = gets.chomp
+    stations << Station.new(name)
+    puts "Station #{name} created"
+  when "create_train"
+    print "Enter train's number: "
+    number = gets.chomp
+    print "Enter train's type: "
+    type = gets.chomp
+    case type
+    when "passenger"
+      trains << PassengerTrain.new(number)
+      puts "Passenger train #{number} created"
+    when "cargo"
+      trains << CargoTrain.new(number)
+      puts "Cargo train #{number} created"
+    else
+      puts "Wrong train type"
     end
-
-  when "route"
-    route = route_menu.get_object(routes, stations, station_menu)
+  when "create_route"
+    departure = menu.find_object("departure station", stations)
+    next if departure == nil
+    arrival = menu.find_object("arival station", stations)
+    next if arrival == nil
+    print "Enter route's name: "
+    name = gets.chomp
+    routes << Route.new(name, departure, arrival)
+    puts "Route #{name} created"
+  when "add_station"
+    route = menu.find_object("route", routes)
     next if route == nil
-    route_menu.draw
-    case route_menu.get_command
-    when "add"
-      station = station_menu.get_object(stations)
-      next if station == nil
-      puts route.add_station(station)
-    when "remove"
-      station = station_menu.get_object(stations)
-      next if station == nil
-      puts route.remove_station(station)
-    when "back"
-      next
-    end
-
-  when "train"
-    train = train_menu.get_object(trains)
+    station = menu.find_object("station", stations)
+    next if station == nil
+    puts route.add_station(station)
+  when "remove_station"
+    route = menu.find_object("route", routes)
+    next if route == nil
+    station = menu.find_object("station", stations)
+    next if station == nil
+    puts route.remove_station(station)
+  when "take_route"
+    train = menu.find_object("train", trains)
     next if train == nil
-    train_menu.draw
-    case train_menu.get_command
-    when "add_wagon"
-      case train.type
-      when "passenger"
-        puts train.add_wagon(PassengerWagon.new)
-      when "cargo"
-        puts train.add_wagon(CargoWagon.new)
-      end
-    when "remove_wagon"
-      puts train.remove_wagon
-    when "take_route"
-      route = route_menu.get_object(routes, stations, station_menu)
-      next if route == nil
-      puts train.take_route(route)
-    when "forward"
-      puts train.move_forward
-    when "backward"
-      puts train.move_backward
-    when "back"
-      next
-    end
-
+    route = menu.find_object("route", routes)
+    next if route == nil
+    puts train.take_route(route)
+  when "add_wagon"
+    train = menu.find_object("train", trains)
+    next if train == nil
+    puts train.add_wagon
+  when "remove_wagon"
+    train = menu.find_object("train", trains)
+    next if train == nil
+    puts train.remove_wagon
+  when "forward"
+    train = menu.find_object("train", trains)
+    next if train == nil
+    puts train.move_forward
+  when "backward"
+    train = menu.find_object("train", trains)
+    next if train == nil
+    puts train.move_backward
   when "exit"
     break
   else

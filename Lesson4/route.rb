@@ -21,8 +21,7 @@ class Route
 
   def remove_station(station)
     if station != @stations[0] && station != @stations[-1]
-      @stations.delete(station)
-      "Station #{station.name} removed sucsessfully"
+      @stations.delete(station) == station ?  "Station #{station.name} removed sucsessfully" : "Station #{station.name} is not in the route"
     else
       "You can't delete departure or arrival points!"
     end

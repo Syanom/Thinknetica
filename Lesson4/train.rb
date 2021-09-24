@@ -32,7 +32,7 @@ class Train
     if @speed == 0
       if @wagons.length > 0
         @wagons.pop
-        "Wagon deleted from #{@type} train #{@name}"
+        "Wagon removed from #{@type} train #{@name}"
       else
         "The #{@type} train #{@name} has no wagons"
       end
