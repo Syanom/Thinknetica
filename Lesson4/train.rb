@@ -47,7 +47,7 @@ class Train
       @current_position += 1
       previous_station.train_departure(self)
       current_station.train_arrive(self)
-      "The #{@type} train #{@name} has moved to the next station"
+      "The #{@type} train #{@name} has moved to the #{current_station.name} station"
     else
       "The #{@type} train #{@name} is at the last station on the route, no way forward!"
     end
@@ -59,7 +59,7 @@ class Train
       @current_position -= 1
       next_station.train_departure(self)
       current_station.train_arrive(self)
-      "The #{@type} train #{@name} has moved to the previous station"
+      "The #{@type} train #{@name} has moved to the #{current_station.name} station"
     else
       "The #{@type} train #{@name} is at the starting point of the route, no way backward!"
     end
