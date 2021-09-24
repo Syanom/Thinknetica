@@ -59,12 +59,4 @@ class Menu
       command = "wrong"
     end
   end
-
-  def find_object(object_type, objects)
-    print "Enter #{object_type}'s name: "
-    name = gets.chomp
-    object = objects.find { |station| station.name == name }
-    puts "#{object_type.capitalize} #{name} is not exist" if object == nil
-    object
-  end
 end
