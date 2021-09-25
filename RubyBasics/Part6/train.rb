@@ -9,6 +9,10 @@ class Train
 
   @@trains = []
 
+  def self.find(name)
+    @@trains.find { |train| train.name == name }
+  end
+
   def initialize(name, type)
     @name = name
     @type = type
