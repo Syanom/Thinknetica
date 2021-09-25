@@ -7,11 +7,14 @@ class Train
   attr_reader :type
   attr_reader :name
 
+  @@trains = []
+
   def initialize(name, type)
     @name = name
     @type = type
     @wagons = []
     @speed = 0
+    @@trains << self
   end
 
   def stop
