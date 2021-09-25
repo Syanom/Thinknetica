@@ -1,4 +1,7 @@
+require_relative 'modules.rb'
+
 class Route
+  include InstanceCounter
   attr_reader :name
 
   def [](index)
@@ -12,6 +15,7 @@ class Route
   def initialize(name, departure, arrival)
     @name = name
     @stations = [departure, arrival]
+    register_instance
   end
 
   def add_station(station)

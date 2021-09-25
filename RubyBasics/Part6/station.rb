@@ -1,4 +1,8 @@
+require_relative 'modules.rb'
+
 class Station
+  include InstanceCounter
+
   attr_reader :trains
   attr_reader :name
 
@@ -12,6 +16,7 @@ class Station
     @name = name
     @trains = []
     @@stations << self
+    register_instance
   end
 
   # Метод не используется в программе, но прятать ее смысла не вижу, так как оня явно
