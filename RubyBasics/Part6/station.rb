@@ -8,7 +8,7 @@ class Station
 
   @@stations = []
 
-  def self.stations
+  def self.all
     @@stations
   end
 

@@ -55,7 +55,7 @@ class Main
   def trains_on_station
     station = find_object("station", @stations)
     return if station == nil
-    station.trains.each { |train| puts "#{train.type.capitalize} train #{train.name}" }
+    station.trains.each { |train| puts "#{train.type.capitalize} train #{train.number}" }
   end
 
   def create_station
@@ -144,7 +144,7 @@ class Main
   def find_object(object_type, objects)
     print "Enter #{object_type}'s name: "
     name = gets.chomp
-    object = objects.find { |station| station.name == name }
+    object = objects.find { |object| object.name == name }
     puts "#{object_type.capitalize} #{name} is not exist" if object == nil
     object
   end
