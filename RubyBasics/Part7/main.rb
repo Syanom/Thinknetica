@@ -102,7 +102,11 @@ class Main
     return if route == nil
     station = find_object("station", @stations)
     return if station == nil
-    puts route.add_station(station)
+    begin
+      route.add_station(station)
+    rescue RuntimeError => e
+      puts e.message
+    end
   end
 
   def remove_station
@@ -149,7 +153,7 @@ class Main
     print "Enter #{object_type}'s name: "
     name = gets.chomp
     object = objects.find { |object| object.name == name }
-    puts "#{object_type.capitalize} #{name} is not exist" if object == nil
+    raise "#{object_type.capitalize} #{name} is not exist" if object == nil
     object
   end
 end

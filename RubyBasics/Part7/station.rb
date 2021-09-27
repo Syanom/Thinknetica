@@ -1,4 +1,5 @@
 require_relative 'modules.rb'
+require_relative 'train.rb'
 
 class Station
   include InstanceCounter
@@ -26,10 +27,18 @@ class Station
   end
 
   def train_arrive(train)
+    validate_train!(train)
     @trains << train
   end
 
   def train_departure(train)
+    validate_train!(train)
     @trains.delete(train)
+  end
+
+  protected
+
+  def validate_train!(train)
+    raise "Invalid train" unless train.is_a?(Train)
   end
 end

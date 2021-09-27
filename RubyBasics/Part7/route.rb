@@ -13,6 +13,10 @@ class Route
     register_instance
   end
 
+  def valid?
+    validate_name!
+    validate_stations!
+  end
 
   def [](index)
     @stations[index]
@@ -25,16 +29,12 @@ class Route
   def add_station(station)
     validate_station!(station)
     @stations.insert(-2, station)
-    "Station #{station.name} added sucsessfully"
   end
 
   def remove_station(station)
     validate_station!(station)
-    if station != @stations[0] && station != @stations[-1]
-      @stations.delete(station) == station ?  "Station #{station.name} removed sucsessfully" : "Station #{station.name} is not in the route"
-    else
-      "You can't delete departure or arrival points!"
-    end
+    raise "You can't delete departure or arrival station" if station == @stations[0] || station == @stations[-1]
+    @stations.delete(station)
   end
 
   # На данный момент этот метод нигде не используется, но убирать ее под протектед не имеет смысла
@@ -47,5 +47,14 @@ class Route
 
   def validate_station!(station)
     raise "Invalid station object" unless station.is_a?(Station)
+  end
+
+  def validate_name!
+    raise "Name can't be nil" if @name == nil
+  end
+
+  def validate_stations!
+    raise "Route must have at least 2 stations" if @stations.length < 2
+    @stations.each { |station| raise "Station in route is invalid" unless station.is_a?(Station) }
   end
 end
