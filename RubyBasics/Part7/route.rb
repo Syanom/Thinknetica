@@ -6,6 +6,8 @@ class Route
   attr_reader :name
 
   def initialize(name, departure, arrival)
+    validate_station!(departure)
+    validate_station!(arrival)
     @name = name
     @stations = [departure, arrival]
     register_instance
