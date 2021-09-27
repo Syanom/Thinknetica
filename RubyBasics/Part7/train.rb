@@ -9,6 +9,8 @@ class Train
   attr_reader :number
   alias_method :name, :number
 
+  NUMBER_FORMAT = /^[\da-z]{3}-?[\da-z]{2}/i
+
   @@trains = []
 
   def self.find(number)
@@ -17,6 +19,7 @@ class Train
 
   def initialize(number, type)
     @number = number
+    validate_number!
     @type = type
     @wagons = []
     @speed = 0
@@ -86,7 +89,19 @@ class Train
     "The #{@type} train #{@number} has taken the route #{@route.name}"
   end
 
+  def valid?
+    validate_number!
+    true
+  rescue
+    false
+  end
+
   protected
+
+  def validate_number!
+    raise "Nil number error" if number.nil?
+    raise "Invalid number format" if number !~ NUMBER_FORMAT
+  end
 
   def current_station
     @route[@current_position]
