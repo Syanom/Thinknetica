@@ -7,6 +7,7 @@ class Train
   attr_accessor :speed
   attr_reader :type
   attr_reader :number
+  alias_method :name, :number
 
   @@trains = []
 
@@ -83,10 +84,6 @@ class Train
     @current_position = 0
     move_forward
     "The #{@type} train #{@number} has taken the route #{@route.name}"
-  end
-
-  def name
-    @number
   end
 
   protected
