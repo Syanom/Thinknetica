@@ -62,7 +62,7 @@ class Train
   end
 
   def take_route(route)
-    raise "Route is invalid" unless route.valid?
+    raise "Route is invalid" unless route.is_a?(Route)
     current_station.train_departure(self) unless @route == nil
     @route = route
     @current_position = 0
@@ -73,6 +73,7 @@ class Train
     validate_number!
     validate_type!
     validate_wagons!
+    validate_route!
     true
   rescue RuntimeError
     false
@@ -103,5 +104,11 @@ class Train
 
   def validate_wagons!
     @wagons.each { |wagon| raise "Invalid wagon type" if wagon.type != @type }
+  end
+
+  def validate_route!
+    if @route != nil
+      raise "Route is invalid" unless @route.is_a?(Route)
+    end
   end
 end

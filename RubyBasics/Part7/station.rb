@@ -38,13 +38,20 @@ class Station
 
   def valid?
     validate_name!
-    trains.each { |train| raise "One of the trains invalid" unless train.is_a?(Train) }
+    validate_trains!
+    true
+  rescue RuntimeError
+    false
   end
 
   protected
 
   def validate_train!(train)
-    raise "Invalid train" unless train.is_a?(Train)
+    raise "Invalid train" unless train.valid?
+  end
+
+  def validate_trains!
+    trains.each { |train| raise "One of the trains is invalid" unless train.is_a?(Train) }
   end
 
   def validate_name!

@@ -16,6 +16,9 @@ class Route
   def valid?
     validate_name!
     validate_stations!
+    true
+  rescue RuntimeError
+    false
   end
 
   def [](index)
