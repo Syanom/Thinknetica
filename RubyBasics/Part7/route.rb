@@ -34,7 +34,7 @@ class Route
   def remove_station(station)
     validate_station!(station)
     raise "You can't delete departure or arrival station" if station == @stations[0] || station == @stations[-1]
-    @stations.delete(station)
+    raise "Station #{station.name} is not in the route already" if @stations.delete(station) == nil
   end
 
   # На данный момент этот метод нигде не используется, но убирать ее под протектед не имеет смысла

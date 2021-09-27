@@ -102,6 +102,7 @@ class Main
     route = find_object("route", @routes)
     station = find_object("station", @stations)
     route.add_station(station)
+    puts "Station #{station.name} has been added to route #{route.name}"
   rescue RuntimeError => e
     puts e.message
   end
@@ -109,7 +110,8 @@ class Main
   def remove_station
     route = find_object("route", @routes)
     station = find_object("station", @stations)
-    puts route.remove_station(station)
+    route.remove_station(station)
+    puts "Station #{station.name} has been removed from route #{route.name}"
   rescue RuntimeError => e
     puts e.message
   end
