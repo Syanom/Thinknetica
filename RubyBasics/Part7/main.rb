@@ -54,8 +54,9 @@ class Main
 
   def trains_on_station
     station = find_object("station", @stations)
-    return if station == nil
     station.trains.each { |train| puts "#{train.type.capitalize} train #{train.number}" }
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def create_station
@@ -88,65 +89,65 @@ class Main
 
   def create_route
     departure = find_object("departure station", @stations)
-    return if departure == nil
     arrival = find_object("arival station", @stations)
-    return if arrival == nil
     print "Enter route's name: "
     name = gets.chomp
     @routes << Route.new(name, departure, arrival)
     puts "Route #{name} created"
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def add_station
     route = find_object("route", @routes)
-    return if route == nil
     station = find_object("station", @stations)
-    return if station == nil
-    begin
-      route.add_station(station)
-    rescue RuntimeError => e
-      puts e.message
-    end
+    route.add_station(station)
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def remove_station
     route = find_object("route", @routes)
-    return if route == nil
     station = find_object("station", @stations)
-    return if station == nil
     puts route.remove_station(station)
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def take_route
     train = find_object("train", @trains)
-    return if train == nil
     route = find_object("route", @routes)
-    return if route == nil
     puts train.take_route(route)
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def add_wagon
     train = find_object("train", @trains)
-    return if train == nil
     puts train.add_wagon
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def remove_wagon
     train = find_object("train", @trains)
-    return if train == nil
     puts train.remove_wagon
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def forward
     train = find_object("train", @trains)
-    return if train == nil
     puts train.move_forward
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def backward
     train = find_object("train", @trains)
-    return if train == nil
     puts train.move_backward
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def find_object(object_type, objects)
