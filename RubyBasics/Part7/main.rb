@@ -121,7 +121,22 @@ class Main
     train = find_object("train", @trains)
     route = find_object("route", @routes)
     train.take_route(route)
-    "The #{train.type} train #{train.number} has taken the route #{route.name}"
+    puts "The #{train.type} train #{train.number} has taken the route #{route.name}"
+  rescue RuntimeError => e
+    puts e.message
+  end
+
+  def forward
+    train = find_object("train", @trains)
+    train.move_forward
+    puts "The #{train.type} train #{train.number} has moved to the #{train.current_station.name} station"
+  rescue RuntimeError => e
+    puts e.message
+  end
+
+  def backward
+    train = find_object("train", @trains)
+    puts train.move_backward
   rescue RuntimeError => e
     puts e.message
   end
@@ -136,20 +151,6 @@ class Main
   def remove_wagon
     train = find_object("train", @trains)
     puts train.remove_wagon
-  rescue RuntimeError => e
-    puts e.message
-  end
-
-  def forward
-    train = find_object("train", @trains)
-    puts train.move_forward
-  rescue RuntimeError => e
-    puts e.message
-  end
-
-  def backward
-    train = find_object("train", @trains)
-    puts train.move_backward
   rescue RuntimeError => e
     puts e.message
   end

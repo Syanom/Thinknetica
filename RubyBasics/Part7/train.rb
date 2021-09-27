@@ -61,15 +61,11 @@ class Train
   end
 
   def move_forward
-    return "The train #{@number} has no route assigned" if @route == nil
-    unless @current_position == @route.length - 1
-      @current_position += 1
-      previous_station.train_departure(self)
-      current_station.train_arrive(self)
-      "The #{@type} train #{@number} has moved to the #{current_station.name} station"
-    else
-      "The #{@type} train #{@number} is at the last station on the route, no way forward!"
-    end
+    raise "The train #{@number} has no route assigned" if @route == nil
+    raise "The #{@type} train #{@number} is at the last station on the route, no way forward!" if @current_position == @route.length - 1
+    @current_position += 1
+    previous_station.train_departure(self)
+    current_station.train_arrive(self)
   end
 
   def move_backward
@@ -103,17 +99,6 @@ class Train
     false
   end
 
-  protected
-
-  def validate_number!
-    raise "Nil number error" if @number.nil?
-    raise "Invalid number format" if @number !~ NUMBER_FORMAT
-  end
-
-  def validate_type!
-    raise "Invalid train type" unless @type == "passenger" || type == "cargo"
-  end
-
   def current_station
     @route[@current_position]
   end
@@ -124,5 +109,16 @@ class Train
 
   def previous_station
     @current_position != 0 ? @route[@current_position - 1] : "Train is at first station in the route"
+  end
+
+  protected
+
+  def validate_number!
+    raise "Nil number error" if @number.nil?
+    raise "Invalid number format" if @number !~ NUMBER_FORMAT
+  end
+
+  def validate_type!
+    raise "Invalid train type" unless @type == "passenger" || type == "cargo"
   end
 end
