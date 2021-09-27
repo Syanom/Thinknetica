@@ -19,7 +19,7 @@ class Station
     register_instance
   end
 
-  # Метод не используется в программе, но прятать ее смысла не вижу, так как оня явно
+  # Метод не используется в программе, но прятать ее смысла не вижу, так как она явно
   # существует не для этого класса
   def list_of_type_trains(type)
     @trains.select { |train| train.type == type }

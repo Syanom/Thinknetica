@@ -90,12 +90,14 @@ class Train
     "The #{@type} train #{@number} has taken the route #{@route.name}"
   end
 
+  # В контексте этого класса метод не имеет смысла, так как мы, по тз,
+  # выбрасываем ислючения из конструктора. У нас просто не может быть
+  # невалидного поезда.
   def valid?
     validate_number!
     validate_type!
     true
-  rescue RuntimeError => e
-    puts e.message
+  rescue RuntimeError
     false
   end
 
