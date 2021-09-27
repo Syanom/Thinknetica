@@ -66,10 +66,16 @@ class Main
   end
 
   def create_train
-    print "Enter train's number: "
-    number = gets.chomp
-    print "Enter train's type: "
-    type = gets.chomp
+    begin
+      print "Enter train's number: "
+      number = gets.chomp
+      print "Enter train's type: "
+      type = gets.chomp
+      Train.new(number, type)
+    rescue RuntimeError => e
+      puts e.message
+      retry
+    end
     case type
     when "passenger"
       @trains << PassengerTrain.new(number)
@@ -77,8 +83,6 @@ class Main
     when "cargo"
       @trains << CargoTrain.new(number)
       puts "Cargo train #{number} created"
-    else
-      puts "Wrong train type"
     end
   end
 

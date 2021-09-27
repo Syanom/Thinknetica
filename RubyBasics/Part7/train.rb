@@ -21,6 +21,7 @@ class Train
     @number = number
     validate_number!
     @type = type
+    validate_type!
     @wagons = []
     @speed = 0
     @@trains << self
@@ -91,16 +92,22 @@ class Train
 
   def valid?
     validate_number!
+    validate_type!
     true
-  rescue
+  rescue RuntimeError => e
+    puts e.message
     false
   end
 
   protected
 
   def validate_number!
-    raise "Nil number error" if number.nil?
-    raise "Invalid number format" if number !~ NUMBER_FORMAT
+    raise "Nil number error" if @number.nil?
+    raise "Invalid number format" if @number !~ NUMBER_FORMAT
+  end
+
+  def validate_type!
+    raise "Invalid train type" unless @type == "passenger" || type == "cargo"
   end
 
   def current_station
