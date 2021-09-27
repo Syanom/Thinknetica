@@ -36,9 +36,18 @@ class Station
     @trains.delete(train)
   end
 
+  def valid?
+    validate_name!
+    trains.each { |train| raise "One of the trains invalid" unless train.is_a?(Train) }
+  end
+
   protected
 
   def validate_train!(train)
     raise "Invalid train" unless train.is_a?(Train)
+  end
+
+  def validate_name!
+    raise "Name can't be nil" if @name == nil
   end
 end
