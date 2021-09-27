@@ -54,6 +54,7 @@ class Main
 
   def trains_on_station
     station = find_object("station", @stations)
+    puts "There are no trains on this station" if station.trains.empty?
     station.trains.each { |train| puts "#{train.type.capitalize} train #{train.number}" }
   rescue RuntimeError => e
     puts e.message
