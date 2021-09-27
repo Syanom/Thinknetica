@@ -144,7 +144,8 @@ class Main
 
   def add_wagon
     train = find_object("train", @trains)
-    puts train.add_wagon
+    train.add_wagon
+    puts "Wagon has been added to #{train.type} train #{train.number}"
   rescue RuntimeError => e
     puts e.message
   end
@@ -157,7 +158,7 @@ class Main
   end
 
   def find_object(object_type, objects)
-    print "Enter #{object_type}'s name: "
+    print "Enter #{object_type}'s name/number: "
     name = gets.chomp
     object = objects.find { |object| object.name == name }
     raise "#{object_type.capitalize} #{name} is not exist" if object == nil

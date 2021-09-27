@@ -31,20 +31,12 @@ class Train
 
   def stop
     @speed = 0
-    "The #{@type} train #{@number} has been stopped"
   end
 
   def add_wagon(wagon)
-    if @speed == 0
-      if wagon.type == @type
-        @wagons << wagon
-        "Wagon has been added to #{@type} train #{@number}"
-      else
-        "Wrong wagon type"
-      end
-    else
-      "First stop the train!"
-    end
+    raise "First stop the train!" if @speed != 0
+    raise "Wrong wagon type" if wagon.type != @type
+    @wagons << wagon
   end
 
   def remove_wagon
@@ -84,12 +76,10 @@ class Train
     move_forward
   end
 
-  # В контексте этого класса метод не имеет смысла, так как мы, по тз,
-  # выбрасываем ислючения из конструктора. У нас просто не может быть
-  # невалидного поезда.
   def valid?
     validate_number!
     validate_type!
+    validate_wagons!
     true
   rescue RuntimeError
     false
@@ -100,11 +90,11 @@ class Train
   end
 
   def next_station
-    @current_position != @route.length - 1 ? @route[@current_position + 1] : "Train is at last point of the route"
+    @route[@current_position + 1] if @current_position != @route.length - 1
   end
 
   def previous_station
-    @current_position != 0 ? @route[@current_position - 1] : "Train is at first station in the route"
+    @route[@current_position - 1] if @current_position != 0
   end
 
   protected
@@ -116,5 +106,9 @@ class Train
 
   def validate_type!
     raise "Invalid train type" unless @type == "passenger" || type == "cargo"
+  end
+
+  def validate_wagons!
+    @wagons.each { |wagon| raise "Invalid wagon type" if wagon.type != @type }
   end
 end
