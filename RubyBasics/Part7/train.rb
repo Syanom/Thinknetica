@@ -1,4 +1,5 @@
 require_relative 'modules.rb'
+require_relative 'route.rb'
 
 class Train
   include Manufacturer
@@ -84,11 +85,11 @@ class Train
   end
 
   def take_route(route)
+    raise "Route is invalid" unless route.valid?
     current_station.train_departure(self) unless @route == nil
     @route = route
     @current_position = 0
     move_forward
-    "The #{@type} train #{@number} has taken the route #{@route.name}"
   end
 
   # В контексте этого класса метод не имеет смысла, так как мы, по тз,

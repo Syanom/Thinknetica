@@ -120,7 +120,8 @@ class Main
   def take_route
     train = find_object("train", @trains)
     route = find_object("route", @routes)
-    puts train.take_route(route)
+    train.take_route(route)
+    "The #{train.type} train #{train.number} has taken the route #{route.name}"
   rescue RuntimeError => e
     puts e.message
   end
