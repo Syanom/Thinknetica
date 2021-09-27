@@ -136,7 +136,8 @@ class Main
 
   def backward
     train = find_object("train", @trains)
-    puts train.move_backward
+    train.move_backward
+    puts "The #{train.type} train #{train.number} has moved to the #{train.current_station.name} station"
   rescue RuntimeError => e
     puts e.message
   end

@@ -69,15 +69,11 @@ class Train
   end
 
   def move_backward
-    return "The #{@type} train #{@number} has no route assigned" if @route == nil
-    unless @current_position == 0
-      @current_position -= 1
-      next_station.train_departure(self)
-      current_station.train_arrive(self)
-      "The #{@type} train #{@number} has moved to the #{current_station.name} station"
-    else
-      "The #{@type} train #{@number} is at the starting point of the route, no way backward!"
-    end
+    raise "The #{@type} train #{@number} has no route assigned" if @route == nil
+    raise "The #{@type} train #{@number} is at the starting point of the route, no way backward!" if @current_position == 0
+    @current_position -= 1
+    next_station.train_departure(self)
+    current_station.train_arrive(self)
   end
 
   def take_route(route)
