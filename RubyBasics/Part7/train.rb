@@ -84,6 +84,7 @@ class Train
   end
 
   def take_route(route)
+    current_station.train_departure(self) unless @route == nil
     @route = route
     @current_position = 0
     move_forward
