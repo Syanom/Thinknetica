@@ -40,16 +40,9 @@ class Train
   end
 
   def remove_wagon
-    if @speed == 0
-      if @wagons.length > 0
-        @wagons.pop
-        "Wagon removed from #{@type} train #{@number}"
-      else
-        "The #{@type} train #{@number} has no wagons"
-      end
-    else
-      "First stop the train!"
-    end
+    raise "First stop the train!" if @speed != 0
+    raise "The #{@type} train #{@number} has no wagons" if @wagons.length <= 0
+    @wagons.pop
   end
 
   def move_forward

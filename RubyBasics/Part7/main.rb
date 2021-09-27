@@ -152,7 +152,8 @@ class Main
 
   def remove_wagon
     train = find_object("train", @trains)
-    puts train.remove_wagon
+    train.remove_wagon
+    puts "Wagon removed from #{train.type} train #{train.number}"
   rescue RuntimeError => e
     puts e.message
   end
