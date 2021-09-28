@@ -20,11 +20,10 @@ class Train
 
   def initialize(number, type)
     @number = number
-    validate_number!
     @type = type
-    validate_type!
     @wagons = []
     @speed = 0
+    validate!
     @@trains << self
     register_instance
   end
@@ -46,7 +45,7 @@ class Train
   end
 
   def move_forward
-    raise "The train #{@number} has no route assigned" if @route == nil
+    raise "The #{@type} train #{@number} has no route assigned" if @route == nil
     raise "The #{@type} train #{@number} is at the last station on the route, no way forward!" if @current_position == @route.length - 1
     @current_position += 1
     previous_station.train_departure(self)
@@ -70,10 +69,7 @@ class Train
   end
 
   def valid?
-    validate_number!
-    validate_type!
-    validate_wagons!
-    validate_route!
+    validate!
     true
   rescue RuntimeError
     false
@@ -93,22 +89,13 @@ class Train
 
   protected
 
-  def validate_number!
-    raise "Nil number error" if @number.nil?
-    raise "Invalid number format" if @number !~ NUMBER_FORMAT
-  end
-
-  def validate_type!
-    raise "Invalid train type" unless @type == "passenger" || type == "cargo"
-  end
-
-  def validate_wagons!
-    @wagons.each { |wagon| raise "Invalid wagon type" if wagon.type != @type }
-  end
-
-  def validate_route!
-    if @route != nil
-      raise "Route is invalid" unless @route.is_a?(Route)
-    end
+  def validate!
+    errors = []
+    errors << "Nil number error" if @number.nil?
+    errors << "Invalid number format: #{@number}" if @number !~ NUMBER_FORMAT
+    errors << "Invalid train type: #{@type}" unless @type == "passenger" || type == "cargo"
+    @wagons.each { |wagon| errors << "Invalid wagon type #{wagon.type}. Expected #{@type}" if wagon.type != @type }
+    errors << "Route is wrong class" unless @route.is_a?(Route) && @route != nil
+    raise errors.join(". ") unless errors.empty?
   end
 end
