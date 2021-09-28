@@ -9,6 +9,7 @@ class Route
     validate_station!(departure)
     validate_station!(arrival)
     @name = name
+    validate_name!
     @stations = [departure, arrival]
     register_instance
   end
