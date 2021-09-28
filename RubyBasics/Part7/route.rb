@@ -6,17 +6,14 @@ class Route
   attr_reader :name
 
   def initialize(name, departure, arrival)
-    validate_station!(departure)
-    validate_station!(arrival)
     @name = name
-    validate_name!
     @stations = [departure, arrival]
+    validate!
     register_instance
   end
 
   def valid?
-    validate_name!
-    validate_stations!
+    validate!
     true
   rescue RuntimeError
     false
@@ -53,12 +50,11 @@ class Route
     raise "Invalid station object" unless station.is_a?(Station)
   end
 
-  def validate_name!
-    raise "Name can't be nil" if @name == nil
-  end
-
-  def validate_stations!
-    raise "Route must have at least 2 stations" if @stations.length < 2
-    @stations.each { |station| raise "Station in route is invalid" unless station.is_a?(Station) }
+  def validate!
+    errors = []
+    errors << "Name can't be nil" if @name == nil
+    errors << "Route must have at least 2 stations" if @stations.length < 2
+    @stations.each { |station| errors << "Station in route is invalid" unless station.is_a?(Station) }
+    raise errors.join(". ") unless errors.empty?
   end
 end
