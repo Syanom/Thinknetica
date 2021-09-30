@@ -42,6 +42,8 @@ class Main
         forward
       when "backward"
         backward
+      when "wagon_take"
+        wagon_take
       when "exit"
         break
       else
@@ -144,33 +146,40 @@ class Main
 
   def add_wagon
     train = find_object("train", @trains)
+    print "Enter wagon's id: "
+    id = gets.chomp
     case train.type
     when "cargo"
       print "Enter wagon's volume: "
       volume = gets.chomp.to_f
-      train.add_wagon(volume)
+      train.add_wagon(CargoWagon.new(id, volume))
     when "passenger"
       print "Enter wagon's amount of seats: "
       seats = gets.chomp.to_i
-      train.add_wagon(seats)
+      train.add_wagon(PassengerWagon.new(id, volume))
     else
       raise "We not support such type of train yet"
     end
-    puts "Wagon has been added to #{train.type} train #{train.number}"
+    puts "Wagon #{id} has been added to #{train.type} train #{train.number}"
   rescue RuntimeError => e
     puts e.message
   end
 
   def remove_wagon
     train = find_object("train", @trains)
-    train.remove_wagon
-    puts "Wagon removed from #{train.type} train #{train.number}"
+    wagon = find_object("wagon", train.wagons)
+    train.remove_wagon(wagon)
+    puts "Wagon #{wagon.id} removed from #{train.type} train #{train.number}"
   rescue RuntimeError => e
     puts e.message
   end
 
+  def wagon_take
+
+  end
+
   def find_object(object_type, objects)
-    print "Enter #{object_type}'s name/number: "
+    print "Enter #{object_type}'s id: "
     name = gets.chomp
     object = objects.find { |object| object.name == name }
     raise "#{object_type.capitalize} #{name} is not exist" if object == nil

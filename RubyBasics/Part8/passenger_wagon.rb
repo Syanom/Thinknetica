@@ -4,10 +4,10 @@ class PassengerWagon < Wagon
   attr_reader :seats
   attr_reader :taken_seats
 
-  def initialize(seats)
+  def initialize(id, seats)
     @seats = seats
     @taken_seats = 0
-    super("passenger")
+    super("passenger", id)
   end
 
   def take_seat

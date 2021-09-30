@@ -8,6 +8,8 @@ class Train
   attr_accessor :speed
   attr_reader :type
   attr_reader :number
+  attr_reader :wagons
+
   alias_method :name, :number
 
   NUMBER_FORMAT = /^[\da-z]{3}-?[\da-z]{2}/i
@@ -38,10 +40,10 @@ class Train
     @wagons << wagon
   end
 
-  def remove_wagon
+  def remove_wagon(wagon)
     raise "First stop the train!" if @speed != 0
     raise "The #{@type} train #{@number} has no wagons" if @wagons.length <= 0
-    @wagons.pop
+    raise "No such wagon in the train" if @wagons.delete(wagon) == nil
   end
 
   def move_forward

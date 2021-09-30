@@ -4,8 +4,12 @@ class Wagon
   include Manufacturer
 
   attr_reader :type
+  attr_reader :id
 
-  def initialize(type)
+  alias_method :name, :id
+
+  def initialize(type, id)
     @type = type
+    @id = id
   end
 end
