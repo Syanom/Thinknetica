@@ -44,6 +44,8 @@ class Main
         backward
       when "wagon_take"
         wagon_take
+      when "wagons_list"
+        wagons_list
       when "exit"
         break
       else
@@ -156,7 +158,7 @@ class Main
     when "passenger"
       print "Enter wagon's amount of seats: "
       seats = gets.chomp.to_i
-      train.add_wagon(PassengerWagon.new(id, volume))
+      train.add_wagon(PassengerWagon.new(id, seats))
     else
       raise "We not support such type of train yet"
     end
@@ -174,8 +176,31 @@ class Main
     puts e.message
   end
 
-  def wagon_take
+  def wagons_list
+    train = find_object("train", @trains)
+    case train.type
+    when "passenger"
+      train.wagons.each { |wagon| puts "Wagon #{wagon.id}, free seats: #{wagon.seats_left?}, taken seats: #{wagon.taken_seats}" }
+    when "cargo"
+      train.wagons.each { |wagon| puts "Wagon #{wagon.id}, free volume: #{wagon.volume_left?}, taken volume: #{wagon.taken_volume}" }
+    end
+  end
 
+  def wagon_take
+    train = find_object("train", @trains)
+    wagon = find_object("wagon", train.wagons)
+    case train.type
+    when "passenger"
+      wagon.take_seat
+      puts "One seat has been taken"
+    when "cargo"
+      print "Enter amount of volume you want to take: "
+      volume = gets.chomp.to_f
+      wagon.take_volume(volume)
+      puts "#{volume} has been loaded to wagon #{wagon.id}"
+    end
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def find_object(object_type, objects)

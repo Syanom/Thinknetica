@@ -5,8 +5,4 @@ class PassengerTrain < Train
   def initialize(name)
     super(name, "passenger")
   end
-
-  def add_wagon(seats)
-    super(PassengerWagon.new(seats))
-  end
 end

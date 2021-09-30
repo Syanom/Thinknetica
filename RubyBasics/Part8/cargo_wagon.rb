@@ -11,6 +11,7 @@ class CargoWagon < Wagon
   end
 
   def take_volume(volume)
+    raise "You can't fit this cargo in this wagon, there're not enough space" if volume_left? < volume
     @taken_volume += volume
   end
 

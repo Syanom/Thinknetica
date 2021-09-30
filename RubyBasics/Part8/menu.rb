@@ -15,6 +15,7 @@ class Menu
       "Type wa to add wagon to train",
       "Type wr to remove wagon from train",
       "Type wt to take volume/seats in wagon",
+      "Type wl to watch all wagons on train",
       "Type f to move train forward on route",
       "Type b to move train backward from route",
       "Type e to exit the program"
@@ -58,6 +59,8 @@ class Menu
       command = "exit"
     when "wt"
       command = "wagon_take"
+    when "wl"
+      command = "wagons_list"
     else
       command = "wrong"
     end

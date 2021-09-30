@@ -11,6 +11,7 @@ class PassengerWagon < Wagon
   end
 
   def take_seat
+    raise "No sits left" if seats_left? == 0
     @taken_seats += 1
   end
 
