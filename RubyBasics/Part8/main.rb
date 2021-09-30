@@ -55,7 +55,7 @@ class Main
   def trains_on_station
     station = find_object("station", @stations)
     puts "There are no trains on this station" if station.trains.empty?
-    station.trains.each { |train| puts "#{train.type.capitalize} train #{train.number}" }
+    station.each_train { |train| puts "#{train.type.capitalize} train #{train.number}" }
   rescue RuntimeError => e
     puts e.message
   end
@@ -144,7 +144,18 @@ class Main
 
   def add_wagon
     train = find_object("train", @trains)
-    train.add_wagon
+    case train.type
+    when "cargo"
+      print "Enter wagon's volume: "
+      volume = gets.chomp.to_f
+      train.add_wagon(volume)
+    when "passenger"
+      print "Enter wagon's amount of seats: "
+      seats = gets.chomp.to_i
+      train.add_wagon(seats)
+    else
+      raise "We not support such type of train yet"
+    end
     puts "Wagon has been added to #{train.type} train #{train.number}"
   rescue RuntimeError => e
     puts e.message

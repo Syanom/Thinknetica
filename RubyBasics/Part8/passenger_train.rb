@@ -6,7 +6,7 @@ class PassengerTrain < Train
     super(name, "passenger")
   end
 
-  def add_wagon
-    super(PassengerWagon.new)
+  def add_wagon(seats)
+    super(PassengerWagon.new(seats))
   end
 end

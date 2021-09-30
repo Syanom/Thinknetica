@@ -87,6 +87,10 @@ class Train
     @route[@current_position - 1] if @current_position != 0
   end
 
+  def each_wagon(&block)
+    wagons.each(&block)
+  end
+
   protected
 
   def validate!
