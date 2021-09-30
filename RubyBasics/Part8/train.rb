@@ -95,7 +95,7 @@ class Train
     errors << "Invalid number format: #{@number}" if @number !~ NUMBER_FORMAT
     errors << "Invalid train type: #{@type}" unless @type == "passenger" || type == "cargo"
     @wagons.each { |wagon| errors << "Invalid wagon type #{wagon.type}. Expected #{@type}" if wagon.type != @type }
-    errors << "Route is wrong class" unless @route.is_a?(Route) && @route != nil
+    errors << "Route is wrong class" unless @route.is_a?(Route) || @route == nil
     raise errors.join(". ") unless errors.empty?
   end
 end

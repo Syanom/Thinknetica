@@ -15,8 +15,8 @@ class Station
 
   def initialize(name)
     @name = name
-    validate_name!
     @trains = []
+    validate!
     @@stations << self
     register_instance
   end
@@ -42,6 +42,10 @@ class Station
     true
   rescue RuntimeError
     false
+  end
+
+  def each_train(&block)
+    trains.each(&block)
   end
 
   protected
