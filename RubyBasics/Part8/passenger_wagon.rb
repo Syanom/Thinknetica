@@ -1,21 +1,14 @@
-require_relative 'wagon.rb'
+require_relative 'wagon'
 
+# Wagon for PassengerTrain class
 class PassengerWagon < Wagon
-  attr_reader :seats
-  attr_reader :taken_seats
-
   def initialize(id, seats)
-    @seats = seats
-    @taken_seats = 0
-    super("passenger", id)
+    super('passenger', id, seats)
   end
 
   def take_seat
-    raise "No sits left" if seats_left? == 0
-    @taken_seats += 1
-  end
+    raise 'No seats left' if space_left?.zero?
 
-  def seats_left?
-    @seats - @taken_seats
+    @taken_space += 1
   end
 end

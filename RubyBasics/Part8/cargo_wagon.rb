@@ -1,21 +1,14 @@
-require_relative 'wagon.rb'
+require_relative 'wagon'
 
+# Wagon for CargoTrain class
 class CargoWagon < Wagon
-  attr_reader :volume
-  attr_reader :taken_volume
-
   def initialize(id, volume)
-    @volume = volume
-    @taken_volume = 0
-    super("cargo", id)
+    super('cargo', id, volume)
   end
 
   def take_volume(volume)
-    raise "You can't fit this cargo in this wagon, there're not enough space" if volume_left? < volume
-    @taken_volume += volume
-  end
+    raise "Available volume: #{space_left?} < loading volume: #{volume}. Operation cancelled" if space_left? < volume
 
-  def volume_left?
-    @volume - @taken_volume
+    @taken_space += volume
   end
 end

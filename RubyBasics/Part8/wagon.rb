@@ -1,15 +1,24 @@
-require_relative 'modules.rb'
+require_relative 'modules'
 
+# Parent class for train's wagons
 class Wagon
   include Manufacturer
+  attr_reader :type, :id, :space, :taken_space
 
-  attr_reader :type
-  attr_reader :id
+  alias name id
 
-  alias_method :name, :id
-
-  def initialize(type, id)
+  def initialize(type, id, space)
     @type = type
     @id = id
+    @space = space
+    @taken_space = 0
+  end
+
+  def space_left?
+    @space - @taken_space
+  end
+
+  def take_place
+    raise 'Not implemended'
   end
 end
