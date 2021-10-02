@@ -15,7 +15,7 @@ class Wagon
   end
 
   def space_left?
-    @space - @taken_space
+    space - taken_space
   end
 
   def take_place

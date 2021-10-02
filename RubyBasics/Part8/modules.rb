@@ -1,15 +1,18 @@
+# Module to set and get wagon's and train's manufacturers
 module Manufacturer
   protected
+
   attr_accessor :manufacturer
 end
 
-
+# Module for counting instances
 module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
     base.include InstanceMethods
   end
 
+  # Creating and increasing class variable for counting instances
   module ClassMethods
     @@instances = 0
 
@@ -22,6 +25,7 @@ module InstanceCounter
     end
   end
 
+  # Module for increasing instances variable
   module InstanceMethods
     protected
 

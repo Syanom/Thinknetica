@@ -1,11 +1,11 @@
-require_relative 'modules.rb'
-require_relative 'train.rb'
+require_relative 'modules'
+require_relative 'train'
 
+# Operating stations
 class Station
   include InstanceCounter
 
-  attr_reader :trains
-  attr_reader :name
+  attr_reader :trains, :name
 
   @@stations = []
 
@@ -24,17 +24,17 @@ class Station
   # Метод не используется в программе, но прятать ее смысла не вижу, так как она явно
   # существует не для этого класса
   def list_of_type_trains(type)
-    @trains.select { |train| train.type == type }
+    trains.select { |train| train.type == type }
   end
 
   def train_arrive(train)
     validate_train!(train)
-    @trains << train
+    trains << train
   end
 
   def train_departure(train)
     validate_train!(train)
-    @trains.delete(train)
+    trains.delete(train)
   end
 
   def valid?
@@ -51,13 +51,13 @@ class Station
   protected
 
   def validate_train!(train)
-    raise "Invalid train" unless train.valid?
+    raise 'Invalid train' unless train.valid?
   end
 
   def validate!
     errors = []
-    errors << "Name can't be nil" if @name == nil
-    trains.each { |train| errors << "One of the trains is invalid" unless train.is_a?(Train) }
-    raise errors.join(". ") unless errors.empty?
+    errors << "Name can't be nil" if name.nil?
+    trains.each { |train| errors << 'One of the trains is invalid' unless train.is_a?(Train) }
+    raise errors.join('. ') unless errors.empty?
   end
 end

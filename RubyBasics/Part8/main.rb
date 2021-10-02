@@ -185,6 +185,8 @@ class Main
     when 'cargo'
       train.wagons.each { |wagon| puts "Wagon #{wagon.id}, free volume: #{wagon.space_left?}, taken volume: #{wagon.taken_space}" }
     end
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def wagon_take
@@ -208,7 +210,7 @@ class Main
     print "Enter #{object_type}'s id: "
     name = gets.chomp
     object = objects.find { |object| object.name == name }
-    raise "#{object_type.capitalize} #{name} is not exist" if object == nil
+    raise "#{object_type.capitalize} #{name} is not exist" if object.nil?
 
     object
   end
