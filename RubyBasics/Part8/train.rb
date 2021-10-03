@@ -35,7 +35,7 @@ class Train
 
   def add_wagon(wagon)
     raise 'First stop the train!' if speed != 0
-    raise 'Wrong wagon type' if wagon.type != @type
+    raise 'Wrong wagon type' if wagon.type != type
 
     wagons << wagon
   end
