@@ -9,11 +9,12 @@ class Wagon
 
   alias name id
 
-  def initialize(type, id, space, taken_space = 0)
+  def initialize(type, id, space, options = {})
     @type = type
     @id = id
     @space = space
-    @taken_space = taken_space
+    @taken_space = options[:taken_space]
+    @manufacturer = options[:manufacturer]
   end
 
   def space_left?

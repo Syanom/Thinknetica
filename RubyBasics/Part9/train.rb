@@ -27,6 +27,7 @@ class Train
     @wagons = options[:wagons] || []
     @speed = options[:speed] || 0
     @route = options[:route]
+    @manufacturer = options[:manufacturer]
     validate!
     @@trains << self
     register_instance
