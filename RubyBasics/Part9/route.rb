@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'modules'
 require_relative 'station'
 
@@ -6,9 +8,10 @@ class Route
   include InstanceCounter
   attr_reader :name
 
-  def initialize(name, departure, arrival)
+  def initialize(name, departure, arrival, *stations)
     @name = name
     @stations = [departure, arrival]
+    @stations.insert(1, stations).flatten!
     validate!
     register_instance
   end

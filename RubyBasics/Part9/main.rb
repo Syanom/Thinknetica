@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'station'
 require_relative 'route'
 require_relative 'passenger_train'
@@ -18,7 +20,7 @@ class Main
   def run
     loop do
       @menu.draw
-      case @menu.get_command
+      case @menu.command
       when 'all_stations'
         @stations.each { |station| puts station.name }
       when 'trains_on_station'
@@ -181,9 +183,13 @@ class Main
     train = find_object('train', @trains)
     case train.type
     when 'passenger'
-      train.wagons.each { |wagon| puts "Wagon #{wagon.id}, free seats: #{wagon.space_left?}, taken seats: #{wagon.taken_space}" }
+      train.wagons.each do |wagon|
+        puts "Wagon #{wagon.id}, free seats: #{wagon.space_left?}, taken seats: #{wagon.taken_space}"
+      end
     when 'cargo'
-      train.wagons.each { |wagon| puts "Wagon #{wagon.id}, free volume: #{wagon.space_left?}, taken volume: #{wagon.taken_space}" }
+      train.wagons.each do |wagon|
+        puts "Wagon #{wagon.id}, free volume: #{wagon.space_left?}, taken volume: #{wagon.taken_space}"
+      end
     end
   rescue RuntimeError => e
     puts e.message

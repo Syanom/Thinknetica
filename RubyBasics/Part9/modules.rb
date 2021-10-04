@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Module to set and get wagon's and train's manufacturers
 module Manufacturer
   protected
