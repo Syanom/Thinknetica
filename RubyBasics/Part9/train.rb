@@ -21,11 +21,12 @@ class Train
     @@trains.find { |train| train.number == number }
   end
 
-  def initialize(number, type)
+  def initialize(number, type, options = {})
     @number = number
     @type = type
-    @wagons = []
-    @speed = 0
+    @wagons = options[:wagons] || []
+    @speed = options[:speed] || 0
+    @route = options[:route]
     validate!
     @@trains << self
     register_instance
