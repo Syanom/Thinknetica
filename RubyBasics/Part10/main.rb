@@ -72,19 +72,15 @@ class Main
     name = gets.chomp
     @stations << Station.new(name)
     puts "Station #{name} created"
+  rescue RuntimeError => e
+    puts e.message
   end
 
   def create_train
-    begin
-      print "Enter train's number: "
-      number = gets.chomp
-      print "Enter train's type: "
-      type = gets.chomp
-      Train.new(number, type)
-    rescue RuntimeError => e
-      puts e.message
-      retry
-    end
+    print "Enter train's number: "
+    number = gets.chomp
+    print "Enter train's type: "
+    type = gets.chomp
     case type
     when 'passenger'
       @trains << PassengerTrain.new(number)
@@ -92,7 +88,12 @@ class Main
     when 'cargo'
       @trains << CargoTrain.new(number)
       puts "Cargo train #{number} created"
+    else
+      raise 'Wrong train type'
     end
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 
   def create_route

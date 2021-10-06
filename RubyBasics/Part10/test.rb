@@ -7,10 +7,10 @@ class TestClass
   include Validation
   attr_accessor_with_history :x, :y
   validate :x, :presence
-  validate :x, :type, Integer
-  validate :y, :presence
-  validate :y, :type, String
-  validate :y, :format, /^[\da-z]{3}-?[\da-z]{2}/i
+  # validate :x, :type, Integer
+  # validate :y, :presence
+  # validate :y, :type, String
+  # validate :y, :format, /^[\da-z]{3}-?[\da-z]{2}/i
   strong_attr_accessor a: Integer, s: String
 end
 
@@ -46,5 +46,6 @@ puts "strong_attr_accessor's tests end"
 # f.x = 'asdasd'
 # f.y = 12
 f.y = '12345'
-# f.validate!
+f.x = 1
+f.validate!
 puts f.valid?

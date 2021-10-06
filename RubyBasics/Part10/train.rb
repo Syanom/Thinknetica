@@ -13,8 +13,6 @@ class Train
 
   alias name number
 
-  NUMBER_FORMAT = /^[\da-z]{3}-?[\da-z]{2}/i.freeze
-
   @@trains = []
 
   def self.find(number)
@@ -28,7 +26,6 @@ class Train
     @speed = options[:speed] || 0
     @route = options[:route]
     @manufacturer = options[:manufacturer]
-    validate!
     @@trains << self
     register_instance
   end
@@ -81,13 +78,6 @@ class Train
     move_forward
   end
 
-  def valid?
-    validate!
-    true
-  rescue RuntimeError
-    false
-  end
-
   def current_station
     @route[@current_position]
   end
@@ -102,17 +92,5 @@ class Train
 
   def each_wagon(&block)
     wagons.each(&block)
-  end
-
-  protected
-
-  def validate!
-    errors = []
-    errors << 'Nil number error' if number.nil?
-    errors << "Invalid number format: #{number}" if number !~ NUMBER_FORMAT
-    errors << "Invalid train type: #{type}" unless type == 'passenger' || type == 'cargo'
-    wagons.each { |wagon| errors << "Invalid wagon type #{wagon.type}. Expected #{type}" if wagon.type != type }
-    errors << 'Route is invalid' unless @route.is_a?(Route) || @route.nil?
-    raise errors.join('. ') unless errors.empty?
   end
 end

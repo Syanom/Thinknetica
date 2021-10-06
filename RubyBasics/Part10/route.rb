@@ -6,7 +6,10 @@ require_relative 'station'
 # Operating routes
 class Route
   include InstanceCounter
+  include Validation
   attr_reader :name
+
+  validate :name, :presence
 
   def initialize(name, departure, arrival, *stations)
     @name = name
@@ -14,13 +17,6 @@ class Route
     @stations.insert(1, stations).flatten!
     validate!
     register_instance
-  end
-
-  def valid?
-    validate!
-    true
-  rescue RuntimeError
-    false
   end
 
   def [](index)
@@ -52,13 +48,5 @@ class Route
 
   def validate_station!(station)
     raise 'Invalid station object' unless station.is_a?(Station)
-  end
-
-  def validate!
-    errors = []
-    errors << "Name can't be nil" if name.nil?
-    errors << 'Route must have at least 2 stations' if @stations.length < 2
-    @stations.each { |station| errors << 'Station in route is invalid' unless station.is_a?(Station) }
-    raise errors.join('. ') unless errors.empty?
   end
 end

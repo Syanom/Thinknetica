@@ -41,7 +41,7 @@ end
 module Accessors
   def attr_accessor_with_history(*attributes)
     attributes.each do |attribute|
-      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
 
       define_method(attribute) do
         instance_variable_get("@#{attribute}")
@@ -61,7 +61,7 @@ module Accessors
 
   def strong_attr_accessor(attributes = {})
     attributes.each do |attribute, class_name|
-      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
 
       define_method(attribute) do
         instance_variable_get("@#{attribute}")
@@ -92,9 +92,9 @@ module Validation
     # Если бы в задаче было validate :number, :format, /A-Z{0,3}/, /dsad/ и мы бы
     # проверяли на соответствие одному или другому, в массиве был бы смысл
 
-    def validate(attribute, validation_type,  parameter = nil)
-      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
-      raise validationError "Validation's name is not symbol" unless validation_type.is_a?(Symbol)
+    def validate(attribute, validation_type, parameter = nil)
+      raise "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise "Validation's name is not symbol" unless validation_type.is_a?(Symbol)
 
       @validations ||= []
       @validations << { attribute: attribute, validation_type: validation_type, parameter: parameter }

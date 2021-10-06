@@ -6,8 +6,11 @@ require_relative 'train'
 # Operating stations
 class Station
   include InstanceCounter
+  include Validation
 
   attr_reader :trains, :name
+
+  validate :name, :presence
 
   @@stations = []
 
@@ -39,13 +42,6 @@ class Station
     trains.delete(train)
   end
 
-  def valid?
-    validate!
-    true
-  rescue RuntimeError
-    false
-  end
-
   def each_train(&block)
     trains.each(&block)
   end
@@ -54,12 +50,5 @@ class Station
 
   def validate_train!(train)
     raise 'Invalid train' unless train.valid?
-  end
-
-  def validate!
-    errors = []
-    errors << "Name can't be nil" if name.nil?
-    trains.each { |train| errors << 'One of the trains is invalid' unless train.is_a?(Train) }
-    raise errors.join('. ') unless errors.empty?
   end
 end
