@@ -76,26 +76,26 @@ module Accessors
       end
     end
   end
+end
 
-  module Validation
-    def self.included(base)
-      base.extend ClassMethods
-      base.include InstanceMethods
-    end
+module Validation
+  def self.included(base)
+    base.extend ClassMethods
+    # base.include InstanceMethods
+  end
 
-    module ClassMethods
-      attr_reader :validations
+  module ClassMethods
+    attr_reader :validations
 
-      def validate(attribute, validation, *params)
-        raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
-        raise validationError "Validation's name is not symbol" unless validation.is_a?(Symbol)
+    def validate(attribute, validation, *params)
+      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise validationError "Validation's name is not symbol" unless validation.is_a?(Symbol)
 
-        @validations ||= []
-        @validations << [attribute, validation, params]
-      end
-    end
-
-    module InstanceMethods
+      @validations ||= []
+      @validations << [attribute, validation, params]
     end
   end
+
+  # module InstanceMethods
+  # end
 end

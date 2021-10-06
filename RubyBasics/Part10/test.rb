@@ -4,6 +4,7 @@ require_relative 'modules'
 
 class TestClass
   extend Accessors
+  include Validation
   attr_accessor_with_history :x, :y
   strong_attr_accessor a: Integer, s: String
 end
@@ -16,7 +17,6 @@ f.x = 3
 puts f.x_history.inspect
 puts f.x
 puts "attr_accessor_with_history' tests end"
-
 puts "strong_attr_accessor's tests begin"
 begin
   # f.a = 'sad'
@@ -26,7 +26,6 @@ begin
 rescue RuntimeError => e
   puts e.message
 end
-
 f.a = 12
 puts f.a
 f.s = 'asfasdf'
