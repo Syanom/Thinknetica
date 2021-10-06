@@ -81,21 +81,65 @@ end
 module Validation
   def self.included(base)
     base.extend ClassMethods
-    # base.include InstanceMethods
+    base.include InstanceMethods
   end
 
   module ClassMethods
     attr_reader :validations
 
-    def validate(attribute, validation, *params)
+    # Не использовал моссив параметров, так как это не имеет смысла в контексте
+    # наших задач. Мы везде обходимся одним параметром, не вижу смысла усложнять код
+    # Если бы в задаче было validate :number, :format, /A-Z{0,3}/, /dsad/ и мы бы
+    # проверяли на соответствие одному или другому, в массиве был бы смысл
+
+    def validate(attribute, validation_type,  parameter = nil)
       raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
-      raise validationError "Validation's name is not symbol" unless validation.is_a?(Symbol)
+      raise validationError "Validation's name is not symbol" unless validation_type.is_a?(Symbol)
 
       @validations ||= []
-      @validations << [attribute, validation, params]
+      @validations << { attribute: attribute, validation_type: validation_type, parameter: parameter }
     end
   end
 
-  # module InstanceMethods
-  # end
+  module InstanceMethods
+    def validate!
+      errors = []
+      self.class.validations.each do |validation|
+        case validation[:validation_type]
+        when :presence
+          validate_presence(validation[:attribute], errors)
+        when :type
+          validate_type(validation[:attribute], validation[:parameter], errors)
+        when :format
+          validate_format(validation[:attribute], validation[:parameter], errors)
+        end
+      end
+      raise errors.join('. ') unless errors.empty?
+    end
+
+    def valid?
+      validate!
+      true
+    rescue StandardError
+      false
+    end
+
+    protected
+
+    def validate_presence(attribute, errors)
+      if instance_variable_get("@#{attribute}").nil? || instance_variable_get("@#{attribute}") == ''
+        errors << "#{attribute} is nil/empty line"
+      end
+    end
+
+    def validate_type(attribute, correct_class, errors)
+      unless instance_variable_get("@#{attribute}").is_a?(correct_class)
+        errors << "#{attribute}'s class: #{instance_variable_get("@#{attribute}").class}, expected class: #{correct_class.name}"
+      end
+    end
+
+    def validate_format(attribute, format, errors)
+      errors << "#{attribute}'s format is invalid" if instance_variable_get("@#{attribute}") !~ format
+    end
+  end
 end
