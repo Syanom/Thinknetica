@@ -41,7 +41,7 @@ end
 module Accessors
   def attr_accessor_with_history(*attributes)
     attributes.each do |attribute|
-      raise TypeError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
 
       define_method(attribute) do
         instance_variable_get("@#{attribute}")
@@ -61,7 +61,7 @@ module Accessors
 
   def strong_attr_accessor(attributes = {})
     attributes.each do |attribute, class_name|
-      raise TypeError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+      raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
 
       define_method(attribute) do
         instance_variable_get("@#{attribute}")
@@ -74,6 +74,28 @@ module Accessors
 
         instance_variable_set("@#{attribute}", value)
       end
+    end
+  end
+
+  module Validation
+    def self.included(base)
+      base.extend ClassMethods
+      base.include InstanceMethods
+    end
+
+    module ClassMethods
+      attr_reader :validations
+
+      def validate(attribute, validation, *params)
+        raise validationError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+        raise validationError "Validation's name is not symbol" unless validation.is_a?(Symbol)
+
+        @validations ||= []
+        @validations << [attribute, validation, params]
+      end
+    end
+
+    module InstanceMethods
     end
   end
 end
