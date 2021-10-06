@@ -39,22 +39,40 @@ end
 
 # Metaprogramming custom accessors
 module Accessors
-  def attr_accessor_with_history(*methods)
-    methods.each do |method|
-      raise TypeError "Variable's name is not symbol" unless method.is_a?(Symbol)
+  def attr_accessor_with_history(*attributes)
+    attributes.each do |attribute|
+      raise TypeError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
 
-      define_method(method) do
-        instance_variable_get("@#{method}")
+      define_method(attribute) do
+        instance_variable_get("@#{attribute}")
       end
 
-      define_method("#{method}=") do |value|
-        instance_variable_set("@#{method}", value)
-        instance_variable_set("@#{method}_history", []) unless instance_variable_get("@#{method}_history")
-        instance_variable_get("@#{method}_history").push(value)
+      define_method("#{attribute}=") do |value|
+        instance_variable_set("@#{attribute}", value)
+        instance_variable_set("@#{attribute}_history", []) unless instance_variable_get("@#{attribute}_history")
+        instance_variable_get("@#{attribute}_history").push(value)
       end
 
-      define_method("#{method}_history") do
-        instance_variable_get("@#{method}_history")
+      define_method("#{attribute}_history") do
+        instance_variable_get("@#{attribute}_history")
+      end
+    end
+  end
+
+  def strong_attr_accessor(attributes = {})
+    attributes.each do |attribute, class_name|
+      raise TypeError "Attribute's name is not symbol" unless attribute.is_a?(Symbol)
+
+      define_method(attribute) do
+        instance_variable_get("@#{attribute}")
+      end
+
+      define_method("#{attribute}=") do |value|
+        unless value.is_a?(class_name)
+          raise "Expected #{attribute} value's class: #{class_name.name}, given value's class: #{value.class.name}"
+        end
+
+        instance_variable_set("@#{attribute}", value)
       end
     end
   end
